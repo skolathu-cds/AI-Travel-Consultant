@@ -1,21 +1,28 @@
-from langchain.prompts import PromptTemplate
-from langchain.llms import OpenAI
+import requests
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get Google Gemini API Key
+GEMINI_API_KEY = os.getenv("GOOGLE_GEMINI_API")
 
 def process_query(user_query):
-    """
-    Processes a flight-related query and provides flight options.
-    """
-    # Define the prompt template for flight-related queries
-    prompt = PromptTemplate(
-        input_variables=["query"],
-        template="Provide flight options based on the following query: {query}"
-    )
+    # Define the endpoint for Google Gemini API
+    url = "https://api.google.com/gemini/v1/query"  # Update with the correct endpoint for Gemini API
+    
+    # Construct the payload for the API request
+    payload = {
+        "query": user_query,
+        "api_key": GEMINI_API_KEY
+    }
 
-    # Prepare the prompt
-    llm_query = prompt.format(query=user_query)
-
-    # Use OpenAI API to fetch a response
-    llm = OpenAI(temperature=0.7)
-    response = llm(llm_query)
-
-    return response
+    # Send the request to Google Gemini API
+    response = requests.post(url, json=payload)
+    
+    # Handle response
+    if response.status_code == 200:
+        return response.json()['data']['response']
+    else:
+        return f"Error: Unable to fetch response. Status code {response.status_code}"

@@ -6,3 +6,4 @@ pandas
 python-docx
 PyPDF2
 fpdf
+langchain-community
