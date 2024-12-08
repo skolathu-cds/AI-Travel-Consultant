@@ -5,11 +5,10 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-# Set the API key using the environment variable
+# Retrieve API key from environment variable
 api_key = os.getenv("GOOGLE_API_KEY")
 
-
-# Initialize the Gemini model (without passing api_key in the constructor)
+# Initialize the Gemini model without explicitly passing the API key
 model = genai.GenerativeModel("gemini-1.5-flash-002", tools="google_search_retrieval")
 
 # Agent for Visa

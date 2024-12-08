@@ -1,10 +1,12 @@
 streamlit
 langchain
-openai
+openai==0.28
 chromadb
 pandas
 python-docx
 PyPDF2
 fpdf
 langchain-community
+requests
+langchain-core
 google-generativeai>=0.8.3

@@ -51,9 +51,16 @@ if user_input:
         user_needs = st.radio("Would you like to know more about hotels or flights?", ["Hotels", "Flights", "No, thanks"])
         
         if user_needs == "Hotels":
-            st.session_state['pincode'] = st.text_input("Can you provide your destination pin code?")
-            if st.session_state.get('pincode'):
-                hotel_prompt = f"List 5-star hotels near {st.session_state['pincode']} for the dates from {st.session_state['travel_date']} for {st.session_state['duration']} weeks."
+            st.session_state['hotel_location'] = st.text_input("Can you provide address or city of your destination to provide hotel options?")
+            
+            hotel_response = "Please provide a location to get hotel options."
+
+            if st.session_state.get('hotel_location'):
+                hotel_prompt = (
+                                f"List hotels near '{st.session_state['hotel_location']}' for the dates "
+                                f"from {st.session_state['travel_date']} for {st.session_state['duration']} weeks. "
+                                f"Include details on pricing and amenities if available."
+                )
                 hotel_response = process_hotel_query(hotel_prompt)
                 st.write(f"**Hotel Options**: {hotel_response}")
         
